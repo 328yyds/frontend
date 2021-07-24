@@ -115,7 +115,7 @@ export default {
           this.no_complete_info("验证码")
           return;
         } else if (this.auth_code !== this.return_auth_code){
-          this.no_complete_info("验证码错误！")
+          this.fail_box("验证码错误！")
           return;
         }
         append_path = "phone"
@@ -134,28 +134,24 @@ export default {
 
           //修改全局变量
           this.store.set_top_username(response.data[1]);
-          this.store.set_top_tel(this.tel);
           this.store.set_top_tel(response.data[2]);
-          if(this.usertype === 'root_user')
-            this.store.set_top_usertype('管理员')
-          else
-            this.store.set_top_usertype('普通用户')
+          this.store.set_top_name(response.data[3]);
+          console.log(response.data[3])
+          if(this.usertype === 'root_user'){
+            this.store.set_top_usertype('root_user');
+          }else{
+            this.store.set_top_usertype('normal_user');
+          }
           this.$router.replace('/main_window');
         } else {
           this.fail_box(response.data[1]);
         }
-      }).catch(()=>{
-        this.$message({
-          showClose: true,
-          message: '网络未连接',
-          type: 'error'
-        });
       })
     },
 
     send_auth_code(){
       // 判断手机格式
-      if(!/^[1][3,4,5,7,8][0-9]{9}$/.test(this.tel)){
+      if(!/^[1][34578][0-9]{9}$/.test(this.tel)){
         this.fail_box("手机号格式错误");
       }else{
         this.show = true;

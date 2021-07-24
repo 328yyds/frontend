@@ -111,7 +111,8 @@ export default {
 
       show: false,
 
-      auth_code_wait_time: 60
+      auth_code_wait_time: 60,
+      return_auth_code: ''
     };
   },
 
@@ -153,6 +154,9 @@ export default {
         }else if(this.password1 !== this.password2){
           this.fail_box("两次密码输入不一致");
           return;
+        }else if(this.return_auth_code !== this.auth_code){
+          this.fail_box("验证码错误！");
+          return;
         }
       }else{
         if(this.tel.length === 0 || this.password1.length === 0 || this.password2.length === 0
@@ -161,6 +165,9 @@ export default {
           return;
         }else if(this.password1 !== this.password2){
           this.fail_box("两次密码输入不一致");
+          return;
+        }else if(this.return_auth_code !== this.auth_code){
+          this.fail_box("验证码错误！");
           return;
         }
       }
@@ -189,9 +196,6 @@ export default {
       }else{
         this.show = true;
         this.auth_code_wait_time = 60;
-        axios_instance.post('/send_auth_code', {
-          tel: this.tel
-        })
         let timer = setInterval(()=>{
           if(this.auth_code_wait_time === 0){
             this.show = false;
@@ -199,8 +203,14 @@ export default {
           }
           this.auth_code_wait_time -= 1;
         }, 1000);
+
+        axios_instance.post("/send_auth_code" , {
+          tel: this.tel,
+        }).then((response) => {
+          this.return_auth_code = response.data[0] + response.data[1] + response.data[2] + response.data[3] + response.data[4] + response.data[5]
+        })
       }
-    }
+    },
   }
 }
 </script>
