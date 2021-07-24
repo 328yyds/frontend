@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>文档标题</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/video.js/7.3.0/video-js.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/video.js/7.3.0/video.min.js"></script>
+
+</head>
+
+<body>
+<div>
+    <video id="example_video" class="video-js vjs-default-skin" controls preload="none"
+           poster="https://i1.hdslb.com/bfs/archive/3123c64f3be9669ae2d2b3ef82549b1b2bd035e5.jpg@480w_270h_1c">
+        <source src="http://127.0.0.1:5000/video/huahai.m3u8" type="application/x-mpegURL">
+        <!-- <source src="C:/Users/WYC/Desktop/fastapitest/testffm/huahai2/huahai.m3u8" type="application/x-mpegURL"> -->
+    </video>
+</div>
+</body>
+<script>
+  var player = videojs('example_video', {
+    muted: true,//静音
+    controls: true,//控制组件
+    width: 1000,
+    loop: true,//循环播放
+    playbackRates: [0.5, 1, 1.5, 2]//控制速度
+  });
+</script>
+
+</html>
