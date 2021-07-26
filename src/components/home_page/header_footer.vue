@@ -48,6 +48,7 @@ export default {
   data() {
     return{
       activeIndex: '1',
+      fit:'scale-down',
     }
   },
   methods: {
@@ -100,16 +101,6 @@ export default {
   font-family: 微軟正黑體;
   font-size: 14px;
 }
-
-
-
-
-
-
-
-
-
-
 #email_logo {
   position: absolute;
   left: 80%;

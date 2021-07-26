@@ -1,18 +1,27 @@
 <template>
   <div class="main_div">
     <div id="main_header">
-      <div id="main_header_text_chinese" style="z-index: 99">实时视频入侵检测系统</div>
-      <div id="main_header_text_English" style="z-index: 99">BJTU Video intrusion detection system</div>
-      <el-button @click="change_view('/login_page')"
-                 id="main_header_btn" round style="z-index: 99" type="primary">Login
+      <div id="main_header_text_chinese" style="z-index: 99" v-show="visible">实时视频入侵检测系统</div>
+      <div id="main_header_text_English" style="z-index: 99" v-show="visible">BJTU Video intrusion detection system
+      </div>
+      <el-button @click="login" id="main_header_btn" round style="z-index: 99" type="primary" v-show="visible">Login
       </el-button>
 
       <img class="backimg" id="img1"
-           src="https://ccdn.goodq.top/caches/4ce61cd756c0c3467de0977d6849043b/aHR0cDovLzU3ZWEyMzYwMzY5YjUudDczLnFpZmVpeWUuY29tL3FmeS1jb250ZW50L3VwbG9hZHMvMjAxNi8xMS8wZDJlOGJhYjNhYTllOTEzNDM5YzA3NDM4MDk4OTcwNC05MC53ZWJw.webp">
+           src="https://ccdn.goodq.top/caches/4ce61cd756c0c3467de0977d6849043b/aHR0cHM6Ly81N2VhMjM2MDM2OWI1LnQ3My5xaWZlaXllLmNvbS9xZnktY29udGVudC91cGxvYWRzLzIwMTYvMTAvYzkzYzNhY2Y0NTMzOWE4M2Q1NGI3ZjE2NTc2OGJhOTQtOTAud2VicA_p_p100_p_3D_p_p100_p_3D.webp">
       <img class="backimg" id="img2"
            src="https://ccdn.goodq.top/caches/4ce61cd756c0c3467de0977d6849043b/aHR0cDovLzU3ZWEyMzYwMzY5YjUudDczLnFpZmVpeWUuY29tL3FmeS1jb250ZW50L3VwbG9hZHMvMjAxNi8xMS84NGI3MTgzMTQ0NWVkZWEyODMzOTRkMGI4NjI3ZTJmMS05MC53ZWJw.webp">
-      <img id="cube"
-           src="https://ccdn.goodq.top/caches/4ce61cd756c0c3467de0977d6849043b/aHR0cDovLzU3ZWEyMzYwMzY5YjUudDczLnFpZmVpeWUuY29tL3FmeS1jb250ZW50L3VwbG9hZHMvMjAxNi8xMS85Y2ZjYzhhYjU2ZDQ3OTY0YjZmMWUzMWM1YTY4MzBiMy05MC53ZWJw.webp">
+      <img id="cube" src="https://ccdn.goodq.top/caches/4ce61cd756c0c3467de0977d6849043b/aHR0cDovLzU3ZWEyMzYwMzY5YjUudDczLnFpZmVpeWUuY29tL3FmeS1jb250ZW50L3VwbG9hZHMvMjAxNi8xMS85Y2ZjYzhhYjU2ZDQ3OTY0YjZmMWUzMWM1YTY4MzBiMy05MC53ZWJw.webp"
+           v-show="visible">
+      <div id="login_div" v-show="!visible">
+        <login :class="{login_div: register}"></login>
+        <el-button :class="{login_div: register}" @click="register=true" id="login_register" type="text">没有账号？立即注册
+        </el-button>
+        <register :class="{login_div: !register}"></register>
+        <el-button :class="{login_div: !register}" @click="register=false" id="register_login" type="text">
+          已有帐号？马上登录
+        </el-button>
+      </div>
     </div>
     <div id="main_main">
       <el-row :gutter="20">
@@ -89,14 +98,22 @@
 </template>
 
 <script>
+import login from "@/components/home_page/Login/login";
+import register from "@/components/home_page/Login/register";
+
 export default {
   name: "tmp",
   data() {
     return {
+      visible: true,
       fit: 'scale-down',
       src: 'https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg',
-      bg2: require('@/assets/init_page/bg2.png')
+      bg2: require('@/assets/init_page/bg2.png'),
+      register: false
     };
+  },
+  components: {
+    login, register
   },
   methods: {
     handleSelect(key, keyPath) {
@@ -106,11 +123,26 @@ export default {
       const that = this;
       that.$router.replace(path);
     },
+    login() {
+      this.visible = false;
+    }
   }
 }
 </script>
 
 <style scoped>
+
+#login_div{
+  position: absolute;
+  left: 60%;
+  opacity: 0.9;
+  top: -50px;
+  height: 600px;
+  width: 480px;
+}
+.login_div {
+  display: none;
+}
 
 @keyframes changeDeg {
   0% {
@@ -123,25 +155,25 @@ export default {
 
 @keyframes changeOpc1 {
   0% {
-    opacity: 1;
-  }
-  50% {
     opacity: 0;
   }
-  100% {
+  75% {
     opacity: 1;
+  }
+  100% {
+    opacity: 0;
   }
 }
 
 @keyframes changeOpc2 {
   0% {
-    opacity: 0;
-  }
-  50% {
     opacity: 1;
   }
-  100% {
+  25% {
     opacity: 0;
+  }
+  100% {
+    opacity: 1;
   }
 }
 
@@ -309,15 +341,29 @@ export default {
 }
 
 #img1 {
-  animation: changeOpc1 5s linear 1s infinite;
+  animation: changeOpc1 15s linear 1s infinite;
 }
 
 #img2 {
-  animation: changeOpc2 5s linear 1s infinite;
+  animation: changeOpc2 15s linear 1s infinite;
 }
 
 #email_logo {
   position: absolute;
   left: 80%;
+}
+
+#login_register {
+  position: absolute;
+  transform: translate(-50%, 0%);
+  top: 450px;
+  left: 50%;
+}
+
+#register_login {
+  position: absolute;
+  transform: translate(-50%, 0%);
+  top: 470px;
+  left: 50%;
 }
 </style>

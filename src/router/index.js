@@ -1,8 +1,6 @@
 import Vue from 'vue'
 import VueRouter from "vue-router";
 
-import init_page from "@/components/Login/init_page";
-
 import main_page from "@/components/main_window/main_window";
 import view from "@/components/main_window/view";
 import record from "@/components/main_window/invade_record";
@@ -39,7 +37,6 @@ const routes = [
     ]
   },
 
-  {path: '/login_page', components: {login: init_page}},
   {
     path: '/main_window',
     name: 'main_window',

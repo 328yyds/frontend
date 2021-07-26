@@ -3,12 +3,17 @@
     <div id="right_record_show">
       <!-- 表格 -->
       <el-table :data="tableData.slice((currentPage-1)*pageSize,currentPage*pageSize)" style="width: 100%">
-        <el-table-column label="种类" prop="date" width="180">
+        <el-table-column label="种类" prop="category" width="180">
         </el-table-column>
-        <el-table-column label="日期" prop="name" width="180">
+        <el-table-column label="日期" prop="date" width="180">
         </el-table-column>
-        <el-table-column label="图片" prop="address">
-
+        <el-table-column label="图片" prop="img">
+          <template slot-scope="scope">
+            <el-popover placement="top-start" title="" trigger="hover">
+              <img :src="scope.row.img" alt="">
+              <img slot="reference" :src="scope.row.img" style="width: 60px;">
+            </el-popover>
+          </template>
         </el-table-column>
       </el-table>
       <!-- 分页器 -->
@@ -26,16 +31,22 @@
 </template>
 
 <script>
+import axios from "axios"
+
+let axios_instance = axios.create({
+  baseURL: 'http://127.0.0.1:8000', // 本地接口服务
+  timeout: 5000,
+})
 export default {
   name: "admin_record",
   data() {
     return {
-      tableData: [
-
-      ],
+      tableData: [],
       currentPage: 1, // 当前页码
       total: 20, // 总条数
-      pageSize: 10 // 每页的数据条数
+      pageSize: 10, // 每页的数据条数
+
+      urls: [],
     }
   },
   methods: {
@@ -56,9 +67,21 @@ export default {
       console.log(`当前页: ${val}`);
       this.currentPage = val;
     }
-
+  },
+  created() {
+    axios_instance.get('/invade_info').then(response => {
+      for(let i = 0; i < response.data.length; i++){
+        this.tableData.push({
+          'category': response.data[i][0],
+          'date': response.data[i][1],
+          'img': "http://127.0.0.1:8000/invade_img/" + i,
+        })
+        this.urls.push("http://127.0.0.1:8000/invade_img/" + i);
+      }
+    })
   }
 }
+
 </script>
 
 <style scoped>
