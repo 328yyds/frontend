@@ -97,7 +97,6 @@ export default {
     },
     //登录
     login() {
-      let append_path = "password"
       if (this.login_type === 'password') {
         if (this.username.length === 0) {
           this.no_complete_info("用户名")
@@ -106,7 +105,6 @@ export default {
           this.no_complete_info("密码")
           return;
         }
-        append_path = "password"
       } else {
         if (this.tel.length === 0) {
           this.no_complete_info("手机号")
@@ -118,10 +116,9 @@ export default {
           this.fail_box("验证码错误！")
           return;
         }
-        append_path = "phone"
       }
 
-      axios_instance.post("/login_by_" + append_path, {
+      axios_instance.post("/login", {
         login_type: this.login_type,
         usertype: this.usertype,
         username: this.username,

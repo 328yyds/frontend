@@ -27,7 +27,7 @@
 
 <script>
 
-import bg from '../background'
+import bg from './background'
 import login from "@/components/Login/login";
 import register from "@/components/Login/register";
 
@@ -52,6 +52,12 @@ export default {
 
 <style scoped>
 
+#app{
+  left: 50%;
+  vertical-align: middle;
+  transform: translate(-50%, 0);
+}
+
 .right_div {
   display: none;
 }
@@ -68,11 +74,11 @@ export default {
 #login_div {
   position: absolute;
   font-size: 24px;
-  transform: translate(-50%, 0%);
-  top: 15%;
+  transform: translate(-50%, 0);
   width: 1000px;
-  left: 50%;
   box-shadow: rgba(0, 0, 0, 0.07);
+  left: 50%;
+  top: 130px;
 }
 
 

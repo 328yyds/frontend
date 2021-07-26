@@ -27,7 +27,7 @@
 
 <script>
 
-import bg from '../background'
+import bg from './background'
 import login from "@/components/Login/login";
 import register from "@/components/Login/register";
 // import register from "@/components/Login/register";

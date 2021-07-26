@@ -5,77 +5,78 @@
         <div id="show_image">
           <el-row>
             <el-image
-                style="width: 200px; height: 275px"
+                :fit="fit"
                 :src="require(`@/assets/user_image.jpg`)"
-                :fit="fit"></el-image>
+                style="width: 200px; height: 275px"></el-image>
           </el-row>
           <el-row>
-            <div id="show_name">{{this.store.top_username}}</div>
+            <div id="show_name">{{ this.store.top_username }}</div>
           </el-row>
         </div>
       </el-col>
 
 
-      <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+      <el-form :model="ruleForm" :rules="rules" class="demo-ruleForm" label-width="100px" ref="ruleForm" status-icon>
         <el-col :span="12">
           <div id="show_inf">
-            <el-row gutter="20" class="el-row1">
+            <el-row class="el-row1" gutter="20">
               <el-col span="24">
                 <div id="inf_title">修改个人密码</div>
               </el-col>
             </el-row>
-            <el-row gutter="20" class="el-row1">
+            <el-row class="el-row1" gutter="20">
               <el-col span="23">
                 <el-form-item id="text_auth_code" label="验证码" prop="code">
                   <el-input
-                      placeholder="请输入密保手机中收到的验证码"
                       class="input_auth_code"
+                      placeholder="请输入密保手机中收到的验证码"
                       v-model="ruleForm.code">
-                    <el-button slot="append"
-                               :disabled="show" @click="send_auth_code">
-                      {{show?('重新获取('+auth_code_wait_time+')') : "获取验证码"}}</el-button>
+                    <el-button :disabled="show"
+                               @click="send_auth_code" slot="append">
+                      {{ show ? ('重新获取(' + auth_code_wait_time + ')') : "获取验证码" }}
+                    </el-button>
                   </el-input>
                 </el-form-item>
               </el-col>
             </el-row>
 
-            <el-row gutter="20" class="el-row1">
+            <el-row class="el-row1" gutter="20">
               <el-col span="23">
                 <el-form-item id="text_password" label="设置密码" prop="pass">
                   <el-input
+                      autocomplete="off"
                       class="user_reset_password"
                       placeholder="请输入密码"
                       prefix-icon="el-icon-lock"
-                      type="password"
                       show-password
-                      v-model="ruleForm.pass"
-                      autocomplete="off">
+                      type="password"
+                      v-model="ruleForm.pass">
                   </el-input>
                 </el-form-item>
               </el-col>
             </el-row>
 
-            <el-row gutter="20" class="el-row1">
+            <el-row class="el-row1" gutter="20">
               <el-col span="23">
 
                 <el-form-item id="text_password_again" label="再次输入密码" prop="checkPass">
                   <el-input
+                      autocomplete="off"
                       class="user_reset_password"
                       placeholder="请输入再次输入密码"
-                      type="password"
                       prefix-icon="el-icon-lock"
                       show-password
-                      v-model="ruleForm.checkPass"
-                      autocomplete="off">
+                      type="password"
+                      v-model="ruleForm.checkPass">
                   </el-input>
                 </el-form-item>
               </el-col>
             </el-row>
 
-            <el-row gutter="20" class="el-row1">
+            <el-row class="el-row1" gutter="20">
               <el-col span="20">
                 <el-form-item>
-                  <el-button id="btm_confirm" @click="change_password">确  定</el-button>
+                  <el-button @click="change_password" id="btm_confirm">确 定</el-button>
                 </el-form-item>
               </el-col>
             </el-row>
@@ -97,23 +98,13 @@ let axios_instance = axios.create({
 export default {
   name: "new_admin_password",
   data() {
-    var checkCode = (rule, value, callback) => {
+    let checkCode = (rule, value, callback) => {
       if (!value) {
         return callback(new Error('验证码不能为空'));
       }
-      // setTimeout(() => {
-      //   if (!Number.isInteger(value)) {
-      //     callback(new Error('请输入数字值'));
-      //   } else {
-      //     if (value < 18) {
-      //       callback(new Error('必须年满18岁'));
-      //     } else {
-      //       callback();
-      //     }
-      //   }
-      // }, 1000);
+
     };
-    var validatePass = (rule, value, callback) => {
+    let validatePass = (rule, value, callback) => {
       if (value === '') {
         callback(new Error('请输入密码'));
       } else {
@@ -123,7 +114,7 @@ export default {
         callback();
       }
     };
-    var validatePass2 = (rule, value, callback) => {
+    let validatePass2 = (rule, value, callback) => {
       if (value === '') {
         callback(new Error('请再次输入密码'));
       } else if (value !== this.ruleForm.pass) {
@@ -140,13 +131,13 @@ export default {
       },
       rules: {
         code: [
-          { validator: checkCode, trigger: 'blur' }
+          {validator: checkCode, trigger: 'blur'}
         ],
         pass: [
-          { validator: validatePass, trigger: 'blur' }
+          {validator: validatePass, trigger: 'blur'}
         ],
         checkPass: [
-          { validator: validatePass2, trigger: 'blur' }
+          {validator: validatePass2, trigger: 'blur'}
         ]
       },
 
@@ -181,10 +172,10 @@ export default {
       });
     },
 
-    change_password(){
-      if(this.ruleForm.code.length === 0 || this.ruleForm.pass.length === 0 || this.ruleForm.checkPass.length === 0){
+    change_password() {
+      if (this.ruleForm.code.length === 0 || this.ruleForm.pass.length === 0 || this.ruleForm.checkPass.length === 0) {
         return;
-      }else if(this.return_auth_code !== this.ruleForm.code){
+      } else if (this.return_auth_code !== this.ruleForm.code) {
         this.fail_box("验证码错误！");
         return;
       }
@@ -194,10 +185,10 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        axios_instance.post("/change_password" , {
-          new_password:this.ruleForm.checkPass,
-          username:this.store.top_username,
-          usertype:this.store.top_usertype,
+        axios_instance.post("/change_password", {
+          new_password: this.ruleForm.checkPass,
+          username: this.store.top_username,
+          usertype: this.store.top_usertype,
         }).then((response) => {
           if (response.data[0] === true) {
             this.success_box("修改密码成功！");
@@ -215,23 +206,23 @@ export default {
 
     },
 
-    send_auth_code(){
+    send_auth_code() {
       // 判断手机格式
-      if(!/^[1][3,4,5,7,8][0-9]{9}$/.test(this.store.top_tel)){
+      if (!/^[1][3,4,5,7,8][0-9]{9}$/.test(this.store.top_tel)) {
         this.fail_box("手机号格式错误");
-      }else{
+      } else {
         console.log(this.store.top_tel);
         this.show = true;
         this.auth_code_wait_time = 60;
-        let timer = setInterval(()=>{
-          if(this.auth_code_wait_time === 0){
+        let timer = setInterval(() => {
+          if (this.auth_code_wait_time === 0) {
             this.show = false;
             clearInterval(timer);
           }
           this.auth_code_wait_time -= 1;
         }, 1000);
 
-        axios_instance.post("/send_auth_code" , {
+        axios_instance.post("/send_auth_code", {
           tel: this.store.top_tel,
         }).then((response) => {
           this.return_auth_code = response.data[0] + response.data[1] + response.data[2] + response.data[3] + response.data[4] + response.data[5]
@@ -304,7 +295,7 @@ export default {
   color: rgba(16, 16, 16, 100);
   font-size: 28px;
   text-align: center;
-  font-family: Microsoft Yahei,sans-serif;
+  font-family: Microsoft Yahei, sans-serif;
   border: 1px solid rgba(187, 187, 187, 100);
 }
 </style>
