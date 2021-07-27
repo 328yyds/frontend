@@ -6,8 +6,8 @@
           <el-row>
             <el-image
                 :fit="fit"
-                :src="require(`@/assets/user_image.jpg`)"
-                style="width: 200px; height: 275px"></el-image>
+                :src="require(`@/assets/default_img.jpg`)"
+                style="width: 200px; height: 245px"></el-image>
           </el-row>
           <el-row>
             <div id="show_name">{{ this.store.top_username }}</div>
@@ -15,17 +15,11 @@
         </div>
       </el-col>
 
-
-      <el-form :model="ruleForm" :rules="rules" class="demo-ruleForm" label-width="100px" ref="ruleForm" status-icon>
+      <el-form :model="ruleForm" :rules="rules" class="demo-ruleForm" label-width="120px" ref="ruleForm" status-icon>
         <el-col :span="12">
           <div id="show_inf">
             <el-row class="el-row1" gutter="20">
-              <el-col span="24">
-                <div id="inf_title">修改个人密码</div>
-              </el-col>
-            </el-row>
-            <el-row class="el-row1" gutter="20">
-              <el-col span="23">
+              <el-col span="19">
                 <el-form-item id="text_auth_code" label="验证码" prop="code">
                   <el-input
                       class="input_auth_code"
@@ -41,7 +35,7 @@
             </el-row>
 
             <el-row class="el-row1" gutter="20">
-              <el-col span="23">
+              <el-col span="19">
                 <el-form-item id="text_password" label="设置密码" prop="pass">
                   <el-input
                       autocomplete="off"
@@ -57,8 +51,7 @@
             </el-row>
 
             <el-row class="el-row1" gutter="20">
-              <el-col span="23">
-
+              <el-col span="19">
                 <el-form-item id="text_password_again" label="再次输入密码" prop="checkPass">
                   <el-input
                       autocomplete="off"
@@ -74,7 +67,7 @@
             </el-row>
 
             <el-row class="el-row1" gutter="20">
-              <el-col span="20">
+              <el-col span="17">
                 <el-form-item>
                   <el-button @click="change_password" id="btm_confirm">确 定</el-button>
                 </el-form-item>
@@ -266,8 +259,8 @@ export default {
 
 #show_inf {
   position: absolute;
-  left: 600px;
-  top: 50px;
+  left: 555px;
+  top: 100px;
   width: 600px;
   height: 500px;
 }
@@ -289,11 +282,13 @@ export default {
 }
 
 #btm_confirm {
-  width: 200px;
-  height: 60px;
+  position: relative;
+  top: -30px;
+  width: 150px;
+  height: 50px;
   border-radius: 4px;
   color: rgba(16, 16, 16, 100);
-  font-size: 28px;
+  font-size: 25px;
   text-align: center;
   font-family: Microsoft Yahei, sans-serif;
   border: 1px solid rgba(187, 187, 187, 100);

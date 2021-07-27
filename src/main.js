@@ -7,6 +7,11 @@ import router from "@/router";
 import store from "@/components/store";
 import '@/assets/global/global.css'
 
+// 引入echarts
+import echarts from 'echarts'
+// 挂载到vue原型
+Vue.prototype.$echarts = echarts;
+
 
 Vue.use(ElementUI);
 Vue.config.productionTip = false

@@ -1,10 +1,13 @@
 <template>
   <div class="main_div">
     <div id="main_header">
-      <div id="main_header_text_chinese" style="z-index: 99" v-show="visible">实时视频入侵检测系统</div>
-      <div id="main_header_text_English" style="z-index: 99" v-show="visible">BJTU Video intrusion detection system
+      <div id="main_header_text_chinese" style="z-index: 99" >实时视频入侵检测系统</div>
+      <div id="main_header_text_English" style="z-index: 99" >BJTU Video intrusion detection system
       </div>
-      <el-button @click="login" id="main_header_btn" round style="z-index: 99" type="primary" v-show="visible">Login
+      <el-button @click="login" id="main_header_btn" round style="z-index: 99" type="primary" v-show="visible">登录
+      </el-button>
+
+      <el-button @click="back" id="main_header_btn_back" round style="z-index: 99" type="primary" v-show="!visible">返回
       </el-button>
 
       <img class="backimg" id="img1"
@@ -27,30 +30,42 @@
       <el-row :gutter="20">
         <el-col :span="6">
           <div class="show_advantage">
-            <el-image :src="src"></el-image>
-            <div class="advantage_text">优势1</div>
-            <div class="advantage_detail">优势1的细节</div>
+            <el-image
+                :fit="fit"
+                :src="require(`@/assets/init_page/advantage_1.png`)"
+                style="width: 120px; height: 100px"></el-image>
+            <div class="advantage_text">多客户端</div>
+            <div class="advantage_detail">支持多客户端，查看信息便捷</div>
+          </div>
+        </el-col>
+        <el-col :span="6">
+          <div class="show_advantage_2">
+            <el-image
+                :fit="fit"
+                :src="require(`@/assets/init_page/advantage_2.png`)"
+                style="width: 120px; height: 120px"></el-image>
+            <div class="advantage_text">多场景应用</div>
+            <div class="advantage_detail">应用场景广泛，系统兼容性强</div>
           </div>
         </el-col>
         <el-col :span="6">
           <div class="show_advantage">
-            <el-image :src="src"></el-image>
-            <div class="advantage_text">优势2</div>
-            <div class="advantage_detail">优势2的细节</div>
+            <el-image
+                :fit="fit"
+                :src="require(`@/assets/init_page/advantage_3.png`)"
+                style="width: 120px; height: 100px"></el-image>
+            <div class="advantage_text">精准动作识别</div>
+            <div class="advantage_detail">监测识别入侵动作，检测更精准</div>
           </div>
         </el-col>
         <el-col :span="6">
           <div class="show_advantage">
-            <el-image :src="src"></el-image>
-            <div class="advantage_text">优势3</div>
-            <div class="advantage_detail">优势3的细节</div>
-          </div>
-        </el-col>
-        <el-col :span="6">
-          <div class="show_advantage">
-            <el-image :src="src"></el-image>
-            <div class="advantage_text">优势4</div>
-            <div class="advantage_detail">优势4的细节</div>
+            <el-image
+                :fit="fit"
+                :src="require(`@/assets/init_page/advantage_4.png`)"
+                style="width: 120px; height: 100px"></el-image>
+            <div class="advantage_text">数据可视化</div>
+            <div class="advantage_detail">监测信息可视化，保证场所安全</div>
           </div>
         </el-col>
       </el-row>
@@ -61,34 +76,43 @@
              backgroundSize:'100% 100%'}">
       <el-row>
         <el-col :span="24">
-          <div class="scenarios_title">系统应用场景</div>
+          <div class="scenarios_title">
+            <div class="scenarios_title_text">系统应用场景</div>
+            <el-divider class="scenarios_divider"></el-divider>
+          </div>
         </el-col>
       </el-row>
       <el-row :gutter="50">
         <el-col :offset="3" :span="6">
           <div class="scenarios">
             <div class="scenarios_div">
-              <el-image :src="src"></el-image>
-              <div class="scenarios_text">场景1</div>
-              <div class="scenarios_detail">场景1的细节</div>
+              <el-image
+                  :fit="fit"
+                  :src="require(`@/assets/init_page/scenario_1.jpg`)"
+                  style="width: 240px; height: 160px"></el-image>
+              <div class="scenarios_text">宿舍入口</div>
             </div>
           </div>
         </el-col>
         <el-col :span="6">
           <div class="scenarios">
             <div class="scenarios_div">
-              <el-image :src="src"></el-image>
-              <div class="scenarios_text">场景2</div>
-              <div class="scenarios_detail">场景2的细节</div>
+              <el-image
+                  :fit="fit"
+                  :src="require(`@/assets/init_page/scenario_2.jpg`)"
+                  style="width: 240px; height: 160px"></el-image>
+              <div class="scenarios_text">仓库大门</div>
             </div>
           </div>
         </el-col>
         <el-col :span="6">
           <div class="scenarios">
             <div class="scenarios_div">
-              <el-image :src="src"></el-image>
-              <div class="scenarios_text">场景3</div>
-              <div class="scenarios_detail">场景3的细节</div>
+              <el-image
+                  :fit="fit"
+                  :src="require(`@/assets/init_page/scenario_3.jpg`)"
+                  style="width: 240px; height: 160px"></el-image>
+              <div class="scenarios_text">机房重地</div>
             </div>
           </div>
         </el-col>
@@ -125,7 +149,10 @@ export default {
     },
     login() {
       this.visible = false;
-    }
+    },
+    back() {
+      this.visible = true;
+    },
   }
 }
 </script>
@@ -136,9 +163,9 @@ export default {
   position: absolute;
   left: 60%;
   opacity: 0.9;
-  top: -50px;
-  height: 600px;
-  width: 480px;
+  top: -60px;
+  height: 100px;
+  width: 450px;
 }
 .login_div {
   display: none;
@@ -272,6 +299,21 @@ export default {
   position: absolute;
   left: 10%;
   top: 265px;
+  width: 170px;
+  font-family: 微软雅黑;
+  font-size: 16px;
+  padding: 12px 40px;
+  border-width: 1px;
+  border-color: rgb(239, 79, 25);
+  background-color: rgb(239, 79, 25);
+  color: rgb(255, 255, 255);
+}
+
+#main_header_btn_back {
+  position: absolute;
+  left: 9.371%;
+  top: 265px;
+  width: 170px;
   font-family: 微软雅黑;
   font-size: 16px;
   padding: 12px 40px;
@@ -293,6 +335,10 @@ export default {
   padding: 75px;
 }
 
+.show_advantage_2{
+  padding: 55px;
+}
+
 .advantage_text {
   font-size: 14px;
   color: #d3d3d3;
@@ -304,18 +350,19 @@ export default {
 }
 
 .scenarios_title {
+  font-family: 微软雅黑;
   font-size: 36px;
-  font-weight: 700;
+  font-weight: 900;
   font-style: normal;
-  color: #000000;
-  display: inline-block;
+  color: #31353d;
+  display: block;
   padding: 90px;
   vertical-align: bottom;
 }
 
 .scenarios {
   padding: 30px;
-  background-color: #2c3e50;
+  background-color: #c9c9c9;
   border-radius: 4px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04)
 }
@@ -326,7 +373,7 @@ export default {
 
 .scenarios_text {
   font-size: 20px;
-  color: #ffffff;
+  color: #31353d;
 }
 
 .scenarios_detail {
@@ -363,7 +410,22 @@ export default {
 #register_login {
   position: absolute;
   transform: translate(-50%, 0%);
-  top: 470px;
+  top: 485px;
   left: 50%;
 }
+
+#register_back {
+  position: absolute;
+  transform: translate(-50%, 0%);
+  top: 470px;
+  left: 70%;
+}
+
+.scenarios_divider{
+  position: absolute;
+  left: 45%;
+  width: 150px;
+  height: 1px;
+}
+
 </style>

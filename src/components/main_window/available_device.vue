@@ -2,18 +2,12 @@
   <div id="background_div">
     <div id="right_record_show">
       <!-- 表格 -->
-      <el-table :data="tableData.slice((currentPage-1)*pageSize,currentPage*pageSize)" style="width: 100%">
-        <el-table-column label="种类" prop="category" width="180">
+      <el-table :data="tableData.slice((currentPage-1)*pageSize,currentPage*pageSize)" style="width: 100%" v-loading="loading">
+        <el-table-column label="序号" prop="No" width="180">
         </el-table-column>
-        <el-table-column label="日期" prop="date" width="180">
+        <el-table-column label="ip" prop="ip" width="180">
         </el-table-column>
-        <el-table-column label="图片" prop="img">
-          <template slot-scope="scope">
-            <el-popover placement="top-start" title="" trigger="hover">
-              <img :src="scope.row.img" alt="">
-              <img slot="reference" :src="scope.row.img" style="height: 30px;">
-            </el-popover>
-          </template>
+        <el-table-column label="是否可用" prop="available">
         </el-table-column>
       </el-table>
       <!-- 分页器 -->
@@ -35,18 +29,22 @@ import axios from "axios"
 
 let axios_instance = axios.create({
   baseURL: 'http://127.0.0.1:8000', // 本地接口服务
-  timeout: 5000,
+  timeout: 50000,
 })
 export default {
   name: "admin_record",
   data() {
     return {
-      tableData: [],
+      tableData: [
+
+      ],
       currentPage: 1, // 当前页码
       total: 20, // 总条数
-      pageSize: 8, // 每页的数据条数
+      pageSize: 10, // 每页的数据条数
 
       urls: [],
+
+      loading: true,
     }
   },
   methods: {
@@ -68,15 +66,17 @@ export default {
       this.currentPage = val;
     }
   },
-  created() {
-    axios_instance.get('/invade_info').then(response => {
-      for(let i = 0; i < response.data.length; i++){
+
+  mounted(){
+    axios_instance.get('/search_available_ip').then((response) => {
+      let size = response.data.length
+      for(let i = 0; i < size; i++){
         this.tableData.push({
-          'category': response.data[i][0],
-          'date': response.data[i][1],
-          'img': "http://127.0.0.1:8000/invade_img/" + i,
+          'No': i + 1,
+          'ip': response.data[i][0],
+          'available': response.data[i][1]
         })
-        this.urls.push("http://127.0.0.1:8000/invade_img/" + i);
+        this.loading = false
       }
     })
   }

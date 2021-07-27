@@ -1,28 +1,33 @@
 <template>
   <div id="register_div_right">
     <div>
-      <a class="user_register" href="javascript:" @click="is_admin=false;usertype='normal_user';
-      password1='';password2='';admin_code='';auth_code='';">客户注册</a>
-      <a class="admin_register" href="javascript:" @click="is_admin=true;usertype='root_user';
-      password1='';password2='';admin_code='';auth_code='';">管理员注册</a>
+      <a :class="{active : !is_admin}" id="user_register" href="javascript:" @click="is_admin=false;usertype='normal_user';
+      username='';tel='';password1='';password2='';admin_code='';auth_code='';progress_value=0">客户注册</a>
+      <a :class="{active : is_admin}" id="admin_register" href="javascript:" @click="is_admin=true;usertype='root_user';
+      username='';tel='';password1='';password2='';admin_code='';auth_code='';progress_value=0">管理员注册</a>
     </div>
 
-    <el-button type="success" id="register_button" @click="register">注 册</el-button>
+    <el-button type="success" id="register_button" @click="register" :disabled="register_not_complete">注 册</el-button>
     <div :class="{on : !is_admin}">
       <el-input
           class="admin_input_username"
           placeholder="请输入用户名"
           prefix-icon="el-icon-user"
-          v-model="username">
+          size="small"
+          v-model="username"
+          v-on:input ="refresh_progress">
       </el-input>
       <el-input
           class="admin_input_tel"
           placeholder="请输入手机号"
           prefix-icon="el-icon-mobile"
-          v-model="tel">
+          size="small"
+          v-model="tel"
+          v-on:input ="refresh_progress">
       </el-input>
-      <el-input placeholder="请输入验证码" v-model="auth_code" prefix-icon="el-icon-message"
-                class="admin_register_input_auth_code">
+      <el-input placeholder="请输入验证码" v-model="auth_code" prefix-icon="el-icon-message" size="small"
+                class="admin_register_input_auth_code"
+                v-on:input ="refresh_progress">
         <el-button slot="append"
                    :disabled="show" @click="send_auth_code">
           {{show?('重新获取('+auth_code_wait_time+')') : "获取验证码"}}</el-button>
@@ -31,22 +36,28 @@
           class="admin_input_password"
           placeholder="请输入密码"
           prefix-icon="el-icon-lock"
+          size="small"
           show-password
-          v-model="password1">
+          v-model="password1"
+          v-on:input ="refresh_progress">
       </el-input>
       <el-input
           class="admin_input_passwordAgain"
           placeholder="请输入再次密码"
           prefix-icon="el-icon-lock"
+          size="small"
           show-password
-          v-model="password2">
+          v-model="password2"
+          v-on:input ="refresh_progress">
       </el-input>
       <el-input
           class="admin_input_AdminCode"
           placeholder="请输入管理员序列码"
           prefix-icon="el-icon-s-custom"
+          size="small"
           show-password
-          v-model="admin_code">
+          v-model="admin_code"
+          v-on:input ="refresh_progress">
       </el-input>
     </div>
 
@@ -55,16 +66,20 @@
           class="user_input_username"
           placeholder="请输入用户名"
           prefix-icon="el-icon-user"
-          v-model="username">
+          size="small"
+          v-model="username"
+          v-on:input ="refresh_progress">
       </el-input>
       <el-input
           class="user_input_tel"
           placeholder="请输入手机号"
           prefix-icon="el-icon-mobile"
+          size="small"
           v-model="tel">
       </el-input>
-      <el-input placeholder="请输入验证码" v-model="auth_code" prefix-icon="el-icon-message"
-                class="user_register_input_auth_code">
+      <el-input placeholder="请输入验证码" v-model="auth_code" prefix-icon="el-icon-message" size="small"
+                class="user_register_input_auth_code"
+                v-on:input ="refresh_progress">
         <el-button slot="append"
                    :disabled="show" @click="send_auth_code">
           {{show?('重新获取('+auth_code_wait_time+')') : "获取验证码"}}</el-button>
@@ -73,17 +88,22 @@
           class="user_input_password"
           placeholder="请输入密码"
           prefix-icon="el-icon-lock"
+          size="small"
           show-password
-          v-model="password1">
+          v-model="password1"
+          v-on:input ="refresh_progress">
       </el-input>
       <el-input
           class="user_input_passwordAgain"
           placeholder="请输入再次密码"
           prefix-icon="el-icon-lock"
+          size="small"
           show-password
-          v-model="password2">
+          v-model="password2"
+          v-on:input ="refresh_progress">
       </el-input>
     </div>
+    <el-progress :percentage="this.progress_value" status="success" class="register_progress"></el-progress>
   </div>
 </template>
 
@@ -112,7 +132,9 @@ export default {
       show: false,
 
       auth_code_wait_time: 60,
-      return_auth_code: ''
+      return_auth_code: '',
+      progress_value: 0,
+      register_not_complete: true,
     };
   },
 
@@ -143,6 +165,54 @@ export default {
         message: '请输入' + msg,
         type: 'warning'
       });
+    },
+    //刷新进度条
+    refresh_progress(){
+      let value=0;
+      if(this.usertype === 'normal_user'){
+        if(this.username !== ''){
+          value += 20;
+        }
+        if(this.tel !== ''){
+          value += 20;
+        }
+        if(this.auth_code !== ''){
+          value += 20;
+        }
+        if(this.password1 !== ''){
+          value += 20;
+        }
+        if(this.password2 !== ''){
+          value += 20;
+        }
+      }else{
+        if(this.username !== ''){
+          value += 100/6;
+        }
+        if(this.tel !== ''){
+          value += 100/6;
+        }
+        if(this.auth_code !== ''){
+          value += 100/6;
+        }
+        if(this.password1 !== ''){
+          value += 100/6;
+        }
+        if(this.password2 !== ''){
+          value += 100/6;
+        }
+        if(this.admin_code !== ''){
+          value += 100/6;
+        }
+      }
+
+      if(value > 99){
+        this.register_not_complete = false;
+      }else{
+        this.register_not_complete = true;
+      }
+
+      this.progress_value = value;
     },
 
     register(){
@@ -220,9 +290,9 @@ export default {
 #register_button {
   position: absolute;
   font-size: 20px;
-  width: 380px;
-  top: 420px;
-  height: 48px;
+  width: 342px;
+  top: 445px;
+  height: 43px;
   border-radius: 30px;
   left: 50%;
   transform: translate(-50%, 0%);
@@ -230,119 +300,119 @@ export default {
   border-color: rgb(239, 79, 25);
 }
 
-.user_input_username {
+>>> .user_input_username {
   position: absolute;
-  height: 36px;
-  width: 380px;
-  top: 91px;
+  height: 15px;
+  width: 342px;
+  top: 141px;
   left: 50%;
   transform: translate(-50%, 0%);
 }
 
 .user_input_tel {
   position: absolute;
-  height: 36px;
-  width: 380px;
-  top: 156px;
+  height: 32px;
+  width: 342px;
+  top: 196px;
   left: 50%;
   transform: translate(-50%, 0%);
 }
 
 .user_register_input_auth_code {
   position: absolute;
-  height: 36px;
-  width: 380px;
-  top: 221px;
+  height: 32px;
+  width: 342px;
+  top: 251px;
   left: 50%;
   transform: translate(-50%, 0%);
 }
 
 .user_input_password {
   position: absolute;
-  height: 36px;
-  width: 380px;
-  top: 286px;
+  height: 32px;
+  width: 342px;
+  top: 306px;
   left: 50%;
   transform: translate(-50%, 0%);
 }
 
 .user_input_passwordAgain {
   position: absolute;
-  height: 36px;
-  width: 380px;
-  top: 351px;
+  height: 32px;
+  width: 342px;
+  top: 361px;
   left: 50%;
   transform: translate(-50%, 0%);
 }
 
 .admin_input_username {
   position: absolute;
-  height: 36px;
-  width: 380px;
-  top: 90px;
+  height: 32px;
+  width: 342px;
+  top: 130px;
   left: 50%;
   transform: translate(-50%, 0%);
 }
 
 .admin_input_tel {
   position: absolute;
-  height: 36px;
-  width: 380px;
-  top: 145px;
+  height: 32px;
+  width: 342px;
+  top: 180px;
   left: 50%;
   transform: translate(-50%, 0%);
 }
 
 .admin_register_input_auth_code {
   position: absolute;
-  height: 36px;
-  width: 380px;
-  top: 200px;
+  height: 32px;
+  width: 342px;
+  top: 230px;
   left: 50%;
   transform: translate(-50%, 0%);
 }
 
 .admin_input_password {
   position: absolute;
-  height: 36px;
-  width: 380px;
-  top: 255px;
+  height: 10px;
+  width: 342px;
+  top: 280px;
   left: 50%;
   transform: translate(-50%, 0%);
 }
 
 .admin_input_passwordAgain {
   position: absolute;
-  height: 36px;
-  width: 380px;
-  top: 310px;
+  height: 32px;
+  width: 342px;
+  top: 330px;
   left: 50%;
   transform: translate(-50%, 0%);
 }
 
 .admin_input_AdminCode {
   position: absolute;
-  height: 36px;
-  width: 380px;
-  top: 365px;
+  height: 32px;
+  width: 342px;
+  top: 380px;
   left: 50%;
   transform: translate(-50%, 0%);
 }
 
-.user_register {
+#user_register {
   position: absolute;
   font-size: 22px;
-  top: 55px;
-  left: 125px;
+  top: 90px;
+  left: 110px;
   color: #999;
   font-family: SourceHanSansSC-regular;
 }
 
-.admin_register {
+#admin_register {
   position: absolute;
   font-size: 22px;
-  top: 55px;
-  left: 255px;
+  top: 90px;
+  left: 240px;
   color: #999;
   font-family: SourceHanSansSC-regularsz;
 }
@@ -372,6 +442,13 @@ a:hover::before {
 
 .on {
   display: none;
+}
+
+.register_progress{
+  position: absolute;
+  top: 420px;
+  left: 11%;
+  width: 80%;
 }
 
 </style>
