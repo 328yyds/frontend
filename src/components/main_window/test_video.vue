@@ -1,15 +1,35 @@
 <template>
   <div class="test_video">
-    <el-col :key="o" :span="8" v-for="(o) in 2">
-      <el-card :body-style="{ padding: '0px' }">
-        <img :src="urls[o - 1]" class="image">
-        <div style="padding: 14px;">
-          <div class="bottom clearfix">
-            <el-button class="button" type="text"><strong>test video {{o}}</strong></el-button>
-          </div>
-        </div>
-      </el-card>
-    </el-col>
+    <img class="image" id="showImg" style="width: 300px; position:relative; padding: 0"
+         :src="url">
+    <!-- 表格 -->
+    <el-table :data="tableData.slice((currentPage-1)*pageSize,currentPage*pageSize)" style="width: 100%; position: relative">
+      <el-table-column label="No" prop="No" width="180">
+      </el-table-column>
+      <el-table-column label="封面" prop="img">
+        <template slot-scope="scope">
+          <el-popover placement="top-start" title="" trigger="hover">
+            <img :src="scope.row.img" alt="">
+            <img slot="reference" :src="scope.row.img" style="height: 30px;">
+          </el-popover>
+        </template>
+      </el-table-column>
+      <el-table-column label="封面" prop="img">
+        <template slot-scope="scope">
+          <el-button type="primary" round @click="get_test_video(scope.row.No)" style="height: 30px">观看</el-button>
+        </template>
+      </el-table-column>
+    </el-table>
+    <!-- 分页器 -->
+    <div class="block" style="margin-top:15px;">
+      <el-pagination :current-page="currentPage" :page-size="pageSize" :page-sizes="[1,5,10,20]"
+                     :total="tableData.length"
+                     @current-change="handleCurrentChange"
+                     @size-change="handleSizeChange"
+                     align='center'
+                     layout="total, sizes, prev, pager, next, jumper">
+      </el-pagination>
+    </div>
   </div>
 </template>
 
@@ -25,21 +45,50 @@ export default {
   name: "test_video",
   data() {
     return {
-      row: 0,
-      col: 0,
-      size: 0,
-      urls: []
+      tableData: [],
+      currentPage: 1, // 当前页码
+      total: 20, // 总条数
+      pageSize: 8, // 每页的数据条数
+      url: 'http://f.goodq.top/qfy-content/plugins/qfy_editor/assets/images/grid-10.png',
     };
+  },
+
+  methods:{
+    get_test_video(num){
+      num -= 1
+      this.set_url('http://127.0.0.1:8000/test_video/' + num)
+    },
+    set_url(url){
+      this.url = url;
+    },
+    handleOpen(key, keyPath) {
+      console.log(key, keyPath);
+    },
+    handleClose(key, keyPath) {
+      console.log(key, keyPath);
+    },
+    //每页条数改变时触发 选择一页显示多少行
+    handleSizeChange(val) {
+      console.log(`每页 ${val} 条`);
+      this.currentPage = 1;
+      this.pageSize = val;
+    },
+    //当前页改变时触发 跳转其他页
+    handleCurrentChange(val) {
+      console.log(`当前页: ${val}`);
+      this.currentPage = val;
+    }
   },
 
   created() {
     axios_instance.get('/test_video_img/-1').then(response => {
-      this.row = Math.ceil(response.data / 4);
-      this.size = response.data;
-      for (let i = 0; i < response.data; i++) {
-        this.urls.push("http://127.0.0.1:8000/test_video_img/" + i);
+      let size = response.data
+      for (let i = 0; i < size; i++){
+        this.tableData.push({
+          'No': i + 1,
+          'img': "http://127.0.0.1:8000/test_video_img/" + i,
+        })
       }
-      console.log(this.urls)
     })
   },
 
@@ -67,8 +116,7 @@ export default {
 }
 
 .image {
-  width: 100%;
-  height: 220px;
+  width: 150px;
   display: block;
 }
 

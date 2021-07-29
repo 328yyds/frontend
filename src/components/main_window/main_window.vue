@@ -46,7 +46,7 @@
               <span>入侵记录</span>
             </template>
             <el-menu-item index="2-1-1" @click="change_view('/invade_recode');">入侵情况</el-menu-item>
-            <el-menu-item index="2-2">入侵视频回放</el-menu-item>
+            <el-menu-item index="2-2" @click="change_view('/test_video_page')">入侵视频回放</el-menu-item>
             <el-menu-item index="2-3" @click="change_view('/data_show')">入侵数据查询</el-menu-item>
           </el-submenu>
 
