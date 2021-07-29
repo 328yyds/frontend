@@ -5,7 +5,7 @@
         <div id="show_image">
           <input type="file" name="image" accept="image/*" @change='onchangeImgFun'
                  class="header-upload-btn user-header-com">
-          <img  alt="" :src='imgStr' class="user-header-img user-header-com">
+          <img alt="" :src='img_url' class="user-header-img user-header-com">
           <p class="tip">点击上方上传头像(200*245)<span class="error">{{errorStr}}</span></p>
           <el-row>
             <div id="show_name">{{this.store.top_username}}</div>
@@ -65,6 +65,12 @@
 </template>
 
 <script>
+import axios from "axios"
+
+let axios_instance = axios.create({
+  baseURL: 'http://127.0.0.1:8000', // 本地接口服务
+  timeout: 5000,
+})
 export default {
   name: "admin_modify",
   data() {
@@ -76,48 +82,54 @@ export default {
       fit: 'fill',
       usertype: "",
       //上传用户照片
-      imgStr: require('@/assets/upload_img.png'),
-      errorStr: ''
+      img_url: require('@/assets/upload_img.png'),
+      errorStr: '',
+      user_head_base64:''
     }
   },
   methods: {
+    upload_user_head(dataURL){
+      axios_instance.post("/set_user_head", {
+        img_base64: dataURL,
+        username: this.store.top_username,
+      }).then((response) => {
+        if (response.data[0] === true) {
+          this.success_box("头像上传成功！");
+        } else {
+          this.fail_box(response.data[1]);
+        }
+      })
+    },
     handleOpen(key, keyPath) {
       console.log(key, keyPath);
     },
     handleClose(key, keyPath) {
       console.log(key, keyPath);
-    },onchangeImgFun (e) {
+    },
+    onchangeImgFun (e) {
       var file = e.target.files[0]
       console.log(file)
       // 获取图片的大小，做大小限制有用
       let imgSize = file.size
-      console.log(imgSize)
       var _this = this // this指向问题，所以在外面先定义
       // 比如上传头像限制5M大小，这里获取的大小单位是b
       if (imgSize <= 0.5 * 1024 * 1024) {
         // 合格
         _this.errorStr = ''
-        console.log('大小合适')
-        // 开始渲染选择的图片
-        // 本地路径方法 1
-        // this.imgStr = window.URL.createObjectURL(e.target.files[0])
-        // console.log(window.URL.createObjectURL(e.target.files[0])) // 获取当前文件的信息
-
         // base64方法 2
         var reader = new FileReader()
         reader.readAsDataURL(file) // 读出 base64
         reader.onloadend = function () {
           // 图片的 base64 格式, 可以直接当成 img 的 src 属性值
-          var dataURL = reader.result
-          console.log(dataURL)
-          _this.imgStr = dataURL
-          // 下面逻辑处理
+          let dataURL = this.result
+          _this.upload_user_head(dataURL)
+          _this.img_url = dataURL
         }
       } else {
         console.log('大小不合适')
         _this.errorStr = '图片大小超出范围'
       }
-    }
+    },
   },
   mounted() {
     if(this.store.top_usertype === 'root_user'){
@@ -125,6 +137,13 @@ export default {
     }else{
       this.usertype = '普通用户';
     }
+    if(this.store.top_username === '')
+      return
+    axios_instance.get('/get_user_head/' + this.store.top_username).then((response) =>{
+      if(response.data !== false){
+        this.img_url = 'http://127.0.0.1:8000/get_user_head/' + this.store.top_username
+      }
+    })
   }
 }
 </script>

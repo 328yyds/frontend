@@ -41,8 +41,9 @@ export default {
     };
   },
   mounted () {
-    axios_instance.post('/invade_info').then((response)=>{
+    axios_instance.get('/invade_data_show').then((response)=>{
       let strange = 0, normal = 0;
+      console.log(response.data[0][0])
       for(let i = 0; i < 7; i++){
         this.date.push(response.data[i][0])
         this.opinionData_line_all.push(response.data[i][1])

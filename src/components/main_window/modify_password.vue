@@ -5,7 +5,7 @@
         <div id="show_image">
           <el-row>
             <el-image
-                :fit="fit"
+                fit="fill"
                 :src="require(`@/assets/default_img.jpg`)"
                 style="width: 200px; height: 245px"></el-image>
           </el-row>
@@ -18,8 +18,8 @@
       <el-form :model="ruleForm" :rules="rules" class="demo-ruleForm" label-width="120px" ref="ruleForm" status-icon>
         <el-col :span="12">
           <div id="show_inf">
-            <el-row class="el-row1" gutter="20">
-              <el-col span="19">
+            <el-row class="el-row1" :gutter="20">
+              <el-col :span="19">
                 <el-form-item id="text_auth_code" label="验证码" prop="code">
                   <el-input
                       class="input_auth_code"
@@ -34,8 +34,8 @@
               </el-col>
             </el-row>
 
-            <el-row class="el-row1" gutter="20">
-              <el-col span="19">
+            <el-row class="el-row1" :gutter="20">
+              <el-col :span="19">
                 <el-form-item id="text_password" label="设置密码" prop="pass">
                   <el-input
                       autocomplete="off"
@@ -50,8 +50,8 @@
               </el-col>
             </el-row>
 
-            <el-row class="el-row1" gutter="20">
-              <el-col span="19">
+            <el-row class="el-row1" :gutter="20">
+              <el-col :span="19">
                 <el-form-item id="text_password_again" label="再次输入密码" prop="checkPass">
                   <el-input
                       autocomplete="off"
@@ -66,8 +66,8 @@
               </el-col>
             </el-row>
 
-            <el-row class="el-row1" gutter="20">
-              <el-col span="17">
+            <el-row class="el-row1" :gutter="20">
+              <el-col :span="17">
                 <el-form-item>
                   <el-button @click="change_password" id="btm_confirm">确 定</el-button>
                 </el-form-item>
@@ -95,7 +95,6 @@ export default {
       if (!value) {
         return callback(new Error('验证码不能为空'));
       }
-
     };
     let validatePass = (rule, value, callback) => {
       if (value === '') {

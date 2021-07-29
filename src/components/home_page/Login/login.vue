@@ -143,6 +143,8 @@ export default {
         } else {
           this.fail_box(response.data[1]);
         }
+      }).catch(()=>{
+        this.fail_box('网络未连接');
       })
     },
 

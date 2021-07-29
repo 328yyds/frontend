@@ -1,9 +1,9 @@
 <template>
   <div class="main_div">
     <div class="main_header"
-         v-bind:style="{backgroundImage:'url(' + title_bg + ')',
+         v-bind:style="{backgroundImage:'url(https://ccdn.goodq.top/caches/0949e197e2481ff51826a8a6ab38f749/aHR0cHM6Ly81ZjExNDcxZmNhMjgzLnQ3NC5xaWZlaXllLmNvbS9xZnktY29udGVudC91cGxvYWRzLzIwMjAvMDcvMzY0ZGFhMmE3ZjY5MDRhNmJjNTAzZjIyYzM5ZDZmOTEtOTAud2VicA_p_p100_p_3D_p_p100_p_3D.webp)',
            backgroundRepeat:'no-repeat',
-           backgroundSize:'100% 100%'}">
+           backgroundSize:'100%'}" >
     </div>
     <div class="title_text">关于我们</div>
     <div class="main_main">
@@ -23,11 +23,10 @@
     <div class="main_footer">
       <div class="carousel_title">
         <div class="carousel_title_1">我们的团队</div>
-        <el-divider class="title_divider"></el-divider>
         <div class="carousel_title_2">每个人都是团队的核心</div>
       </div>
       <div class="carousel_show">
-        <el-carousel :interval="4000" type="card" height="350px">
+        <el-carousel :interval="4000" arrow="always" height="450px">
           <el-carousel-item v-for="item in imgList" :key="item.id">
             <img :src="item.idView" class="image">
           </el-carousel-item>
@@ -47,7 +46,12 @@ export default {
       title_bg:require('@/assets/about_us/about_us_top_img.png'),
       src: 'https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg',
       imgList: [
-        {id:0,idView:require("@/assets/about_us/person1.jpg")},
+        {id:0,idView:require("@/assets/about_us/person1.png")},
+        {id:1,idView:require("@/assets/about_us/person2.png")},
+        {id:2,idView:require("@/assets/about_us/person3.png")},
+        {id:3,idView:require("@/assets/about_us/person4.png")},
+        {id:4,idView:require("@/assets/about_us/person5.png")},
+        {id:5,idView:require("@/assets/about_us/person6.png")},
       ]
     };
   },
@@ -97,8 +101,8 @@ export default {
   left: 0;
   width: 100%;
   height: 293px;
-  -webkit-filter: blur(3px) brightness(85%);
-  filter: blur(3px) brightness(85%);
+  /*-webkit-filter: blur(3px) brightness(85%);*/
+  /*filter: blur(3px) brightness(85%);*/
 }
 
 .main_main{
@@ -107,7 +111,6 @@ export default {
   left: 0;
   width: 100%;
   height: 455px;
-  background-color: #ffffff;
 }
 
 .main_footer{
@@ -116,7 +119,6 @@ export default {
   left: 0;
   width: 100%;
   height: 715px;
-  background-color: #f2f2f2;
 }
 
 .title_text{
@@ -161,7 +163,6 @@ export default {
   position: absolute;
   font-size: 16px;
   font-family: Arial;
-  color: #b9c6cd;
   left: 56%;
   top: 115px;
 }
@@ -190,9 +191,7 @@ export default {
   font-family: Arial;
   left: 56%;
   top: 255px;
-  color: #b9c6cd;
 }
-
 
 .our_wish_text{
   position: absolute;
@@ -203,7 +202,6 @@ export default {
 }
 
 .el-carousel__item h3 {
-  color: #f2f2f2;
   font-size: 14px;
   opacity: 0.75;
   line-height: 350px;
@@ -213,8 +211,8 @@ export default {
 .carousel_show{
   position: absolute;
   top: 220px;
-  left: 5%;
-  width: 90%;
+  left: 19%;
+  width: 60%;
 }
 
 .carousel_title{
@@ -224,10 +222,15 @@ export default {
 }
 
 .carousel_title_1{
+  padding: 10px;
   font-size: 32px;
+  border-bottom-width: 2px;
+  border-bottom-color: #f1501a;
+  border-bottom-style: solid;
 }
 
 .carousel_title_2{
+  padding: 10px;
   font-size: 16px;
   color: #808080;
 }
