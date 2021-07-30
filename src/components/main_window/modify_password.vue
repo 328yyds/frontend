@@ -6,7 +6,7 @@
           <el-row>
             <el-image
                 fit="fill"
-                :src="require(`@/assets/default_img.jpg`)"
+                :src="img_url"
                 style="width: 200px; height: 245px"></el-image>
           </el-row>
           <el-row>
@@ -136,7 +136,8 @@ export default {
       //验证码
       show: false,
       auth_code_wait_time: 60,
-      return_auth_code: ''
+      return_auth_code: '',
+      img_url: require(`@/assets/default_img.jpg`)
     };
   },
   methods: {
@@ -178,7 +179,7 @@ export default {
         type: 'warning'
       }).then(() => {
         axios_instance.post("/change_password", {
-          new_password: this.ruleForm.checkPass,
+          password: this.ruleForm.checkPass,
           username: this.store.top_username,
           usertype: this.store.top_usertype,
         }).then((response) => {
@@ -195,7 +196,6 @@ export default {
           message: '已取消修改'
         });
       });
-
     },
 
     send_auth_code() {
@@ -221,6 +221,15 @@ export default {
         })
       }
     },
+  },
+  mounted() {
+    if(this.store.top_username === '')
+      return
+    axios_instance.get('/get_user_head/' + this.store.top_username).then((response) =>{
+      if(response.data !== false){
+        this.img_url = 'http://127.0.0.1:8000/get_user_head/' + this.store.top_username
+      }
+    })
   }
 }
 </script>

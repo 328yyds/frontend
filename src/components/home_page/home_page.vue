@@ -1,8 +1,15 @@
 <template>
   <div class="main_div">
     <div id="main_header">
-      <div id="main_header_text_chinese" style="z-index: 99" >实时视频入侵检测系统</div>
-      <div id="main_header_text_English" style="z-index: 99" >BJTU Video intrusion detection system
+      <div id="main_header_text_chinese" style="z-index: 99" >
+        <vue-typed-js :strings="['实时视频入侵检测系统']" :typeSpeed="50" :show-cursor="false">
+          <span class="typing"></span>
+        </vue-typed-js>
+      </div>
+      <div id="main_header_text_English" style="z-index: 99" >
+        <vue-typed-js :strings="['BJTU Video intrusion detection system']" :typeSpeed="50" :start-delay="1200">
+          <span class="typing"></span>
+        </vue-typed-js>
       </div>
       <el-button @click="login" id="main_header_btn" round style="z-index: 99" type="primary" v-show="visible">登录
       </el-button>
@@ -82,41 +89,33 @@
           </div>
         </el-col>
       </el-row>
-      <el-row :gutter="50">
-        <el-col :offset="3" :span="6">
-          <div class="scenarios">
-            <div class="scenarios_div">
-              <el-image
-                  :fit="fit"
-                  :src="require(`@/assets/init_page/scenario_1.jpg`)"
-                  style="width: 240px; height: 160px"></el-image>
-              <div class="scenarios_text">宿舍入口</div>
-            </div>
+
+      <div class="container">
+        <div class="card">
+          <div class="imgBx">
+            <img src="../../assets/init_page/scenario_1.jpg">
           </div>
-        </el-col>
-        <el-col :span="6">
-          <div class="scenarios">
-            <div class="scenarios_div">
-              <el-image
-                  :fit="fit"
-                  :src="require(`@/assets/init_page/scenario_2.jpg`)"
-                  style="width: 240px; height: 160px"></el-image>
-              <div class="scenarios_text">仓库大门</div>
-            </div>
+          <div class="content">
+            <div>宿舍入口</div>
           </div>
-        </el-col>
-        <el-col :span="6">
-          <div class="scenarios">
-            <div class="scenarios_div">
-              <el-image
-                  :fit="fit"
-                  :src="require(`@/assets/init_page/scenario_3.jpg`)"
-                  style="width: 240px; height: 160px"></el-image>
-              <div class="scenarios_text">机房重地</div>
-            </div>
+        </div>
+        <div class="card">
+          <div class="imgBx">
+            <img src="../../assets/init_page/scenario_2.jpg">
           </div>
-        </el-col>
-      </el-row>
+          <div class="content">
+            <div>仓库大门</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="imgBx">
+            <img src="../../assets/init_page/scenario_3.jpg">
+          </div>
+          <div class="content">
+            <div>机房重地</div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -356,7 +355,7 @@ export default {
   font-style: normal;
   color: #31353d;
   display: block;
-  padding: 90px;
+  padding: 50px;
   vertical-align: bottom;
 }
 
@@ -426,6 +425,73 @@ export default {
   left: 45%;
   width: 150px;
   height: 1px;
+}
+
+
+.container{
+  position: relative;
+  height: 300px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 50px 0;
+  padding: 0;
+  font-family: "Poppins", sans-serif;
+}
+
+.container .card{
+  position: relative;
+  max-width: 300px;
+  width: 400px;
+  height: 200px;
+  background: #fff;
+  margin: 70px 80px;
+  padding: 20px 15px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 5px 202px rgba(0,0,0,0.5);
+  transition: .3s ease-in-out;
+}
+
+.container .card:hover{
+  height: 300px;
+}
+
+.container .card .imgBx{
+  position: relative;
+  width: 300px;
+  height: 180px;
+  top: -60px;
+  z-index: 1;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+}
+
+.container .card .imgBx img{
+  width: 100%;
+  height: 180px;
+  border-radius: 4px;
+}
+
+.container .card .content{
+  position: relative;
+  margin-top: -140px;
+  padding: 5px 15px;
+  text-align: center;
+  color: #111;
+  visibility: hidden;
+  opacity: 0;
+  transition: .3s ease-in-out;
+}
+
+.container .card:hover .content{
+  visibility: visible;
+  opacity: 1;
+  margin-top: 15px;
+  transition-delay: .3s;
+  font-size: 30px;
+  color: #31353d;
 }
 
 </style>

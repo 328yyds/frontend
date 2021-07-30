@@ -1,167 +1,139 @@
 <template>
   <div>
-    <div class="main_header"
-         v-bind:style="{backgroundImage:'url(' + title_bg + ')',
-           backgroundRepeat:'no-repeat',
-           backgroundSize:'100% 100%'}">
-      <div class="title_text">系统核心优势</div>
-    </div>
-    <div class="main_main">
-      <el-row :gutter="90">
-        <el-col :span="8" offset="4">
-          <div class="advantage_inf">
-            <div class="show_advantage">
-              <el-image :src="src"></el-image>
-              <div class="advantage_text">优势1</div>
-              <div class="advantage_detail">优势1的细节</div>
-            </div>
+  <h1>项目技术介绍<br/>Technology Introduction</h1>
+  <div class="background"
+       v-bind:style="{backgroundImage:'url(' + require('@/assets/bkg.jpg') + ')'}">
+    <span>Tech</span></div>
+  <h2>
+    <div class="tech_area">
+      <el-row :gutter="20">
+        <el-col :span="6">
+          <div class="show_advantage">
+            <el-image
+                :fit="fit"
+                :src="require(`@/assets/advantage/first_pic.png`)"
+                style="width: 240px; height: 200px"></el-image>
+            <div class="advantage_text">YOLO</div>
+            <div class="advantage_detail">一个用于目标检测的网络。可以用来确定图像中存在某些对象的位置，以及对这些对象进行分类</div>
           </div>
         </el-col>
-        <el-col :span="8">
-          <div class="advantage_inf">
-            <div class="show_advantage">
-              <el-image :src="src"></el-image>
-              <div class="advantage_text">优势2</div>
-              <div class="advantage_detail">优势2的细节</div>
-            </div>
+        <el-col :span="6">
+          <div class="show_advantage_2">
+            <el-image
+                :fit="fit"
+                :src="require(`@/assets/advantage/second_pic.png`)"
+                style="width: 240px; height: 200px"></el-image>
+            <div class="advantage_text">OpenPose</div>
+            <div class="advantage_detail">OpenPose可以实现人体动作、面部表情、手指运动等姿态估计。是世界上首个基于深度学习的实时多人二维姿态估计应用</div>
+          </div>
+        </el-col>
+        <el-col :span="6">
+          <div class="show_advantage">
+            <el-image
+                :fit="fit"
+                :src="require(`@/assets/advantage/third_pic.png`)"
+                style="width: 240px; height: 200px"></el-image>
+            <div class="advantage_text">ORM</div>
+            <div class="advantage_detail">ORM通过使用描述对象和数据库之间映射的元数据，将程序中的对象自动持久化到关系数据库中。</div>
+          </div>
+        </el-col>
+        <el-col :span="6">
+          <div class="show_advantage">
+            <el-image
+                :fit="fit"
+                :src="require(`@/assets/advantage/forth_pic.png`)"
+                style="width: 240px; height: 200px"></el-image>
+            <div class="advantage_text">掩码</div>
+            <div class="advantage_detail">图像掩码操作一般用来对处理的图像(全部或者局部)进行遮挡，来控制图像处理的区域或处理过程。</div>
           </div>
         </el-col>
       </el-row>
-      <el-row :gutter="90">
-        <el-col :span="8" offset="4">
-          <div class="advantage_inf">
-            <div class="show_advantage">
-              <el-image :src="src"></el-image>
-              <div class="advantage_text">优势3</div>
-              <div class="advantage_detail">优势3的细节</div>
-            </div>
-          </div>
-        </el-col>
-        <el-col :span="8">
-          <div class="advantage_inf">
-            <div class="show_advantage">
-              <el-image :src="src"></el-image>
-              <div class="advantage_text">优势4</div>
-              <div class="advantage_detail">优势4的细节</div>
-            </div>
-          </div>
-        </el-col>
-      </el-row>
     </div>
+  </h2>
   </div>
 </template>
 
 <script>
 export default {
-  name: "test",
-  data() {
-    return {
-      activeIndex: '1',
-      fit: 'scale-down',
-      title_bg: require('@/assets/advantage/title_page.png'),
-      src: 'https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg'
-    };
-  },
-  methods: {
-    handleSelect(key, keyPath) {
-      console.log(key, keyPath);
-    },
-    change_view(path) {
-      const that = this;
-      that.$router.replace(path);
-    },
+  name: "tmp_bg",
+
+  mounted() {
+    const bkg = document.querySelector(".background")
+    document.addEventListener('scroll', () =>{
+      console.log(bkg)
+      const scrollY = window.scrollY
+      if(scrollY !== 0){
+        bkg.style.backgroundPosition = `calc(50% + ${scrollY}px) calc(50% + ${scrollY}px)`
+      }else{
+        bkg.style.backgroundPosition = ''
+      }
+    })
   }
 }
 </script>
 
 <style scoped>
-
-.el-header {
-  background-color: #22282d;
-  color: #333;
-  text-align: center;
-  height: 78px;
+body{
+  margin: 0;
+  padding: 0;
+  height: 200vh;
+  overflow-x: hidden;
 }
 
-.el-footer {
-  background-color: #22282d;
-  color: #333;
+.background{
+  background-size: cover;
+  background-position: 75% 75%;
+  height: 1458px;
+  font: 900 36rem '';
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  position: relative;
   text-align: center;
-  height: 500px;
+  overflow: hidden;
 }
 
-.el-main {
-  color: #333;
-  text-align: center;
-  height: 1020px;
-  width: 100%;
-}
-
-#email_logo {
+.background::before{
+  content: '';
+  background-size: cover;
+  background-image: inherit;
+  background-position: 50% 50%;
   position: absolute;
-  left: 80%;
-}
-
-.main_header {
-  position: absolute;
-  top: 60px;
+  top: 0;
   left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: -99;
+}
+
+h1{
+  position: absolute;
+  text-align: center;
   width: 100%;
-  height: 281px;
+  letter-spacing: 10px;
+  color: #3c3f41;
 }
 
-.main_main {
+h2{
   position: absolute;
-  top: 335px;
-  left: 0;
+  letter-spacing: 1px;
+  font-size: 20px;
+  top: 120vh;
   width: 100%;
-  height: 753px;
-  background-color: #f4f7fc;
+  color: #fff;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 30px;
+  background-color: rgba(0, 0, 0, .3);
 }
 
-.title_text {
-  position: absolute;
-  left: 20%;
-  top: 100px;
-  font-size: 48px;
-  font-weight: 500;
-  font-family: 微软雅黑;
-  color: black;
+.advantage_text{
+  font-size: 20px;
+  color: #ffffff;
 }
 
-.el-menu {
-  position: absolute;
-  left: 40%;
-}
-
-.advantage_inf {
-  margin: 30px;
-  padding: 75px;
-  height: 165px;
-  background-color: #ffffff;
-  border-radius: 4px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04)
-}
-
-.show_advantage {
-  padding: 0px;
-}
-
-.advantage_text {
-  font-size: 14px;
-  color: #d3d3d3;
-}
-
-.advantage_detail {
-  font-size: 14px;
-  color: #808080;
-}
-
-.el_footer_text {
-  padding: 20px;
-  color: #8e8f90;
-  font-family: 微軟正黑體;
-  font-size: 14px;
+.advantage_detail{
+  font-size: 15px;
+  color: #fcfcfc;
 }
 
 </style>

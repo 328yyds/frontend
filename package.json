@@ -12,7 +12,9 @@
     "echarts": "^5.1.2",
     "element-plus": "^1.0.2-beta.55",
     "element-ui": "^2.15.3",
-    "vue": "^2.6.11"
+    "vue": "^2.6.11",
+    "vue-echarts": "^6.0.0-rc.6",
+    "vue-typed-js": "^0.1.2"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",

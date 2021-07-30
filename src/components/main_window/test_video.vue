@@ -1,35 +1,38 @@
 <template>
   <div class="test_video">
-    <img class="image" id="showImg" style="width: 300px; position:relative; padding: 0"
+    <img class="image" id="showImg" style="height:650px; top: 0; position:relative; padding: 0"
          :src="url">
     <!-- 表格 -->
-    <el-table :data="tableData.slice((currentPage-1)*pageSize,currentPage*pageSize)" style="width: 100%; position: relative">
-      <el-table-column label="No" prop="No" width="180">
-      </el-table-column>
-      <el-table-column label="封面" prop="img">
-        <template slot-scope="scope">
-          <el-popover placement="top-start" title="" trigger="hover">
-            <img :src="scope.row.img" alt="">
-            <img slot="reference" :src="scope.row.img" style="height: 30px;">
-          </el-popover>
-        </template>
-      </el-table-column>
-      <el-table-column label="封面" prop="img">
-        <template slot-scope="scope">
-          <el-button type="primary" round @click="get_test_video(scope.row.No)" style="height: 30px">观看</el-button>
-        </template>
-      </el-table-column>
-    </el-table>
-    <!-- 分页器 -->
-    <div class="block" style="margin-top:15px;">
-      <el-pagination :current-page="currentPage" :page-size="pageSize" :page-sizes="[1,5,10,20]"
-                     :total="tableData.length"
-                     @current-change="handleCurrentChange"
-                     @size-change="handleSizeChange"
-                     align='center'
-                     layout="total, sizes, prev, pager, next, jumper">
-      </el-pagination>
+    <div class="video_table">
+      <el-table :data="tableData.slice((currentPage-1)*pageSize,currentPage*pageSize)" style="width: 600px; position: relative">
+        <el-table-column label="No" prop="No" width="180px">
+        </el-table-column>-
+        <el-table-column label="封面" prop="img" style="width: 50px">
+          <template slot-scope="scope">
+            <el-popover placement="top-start" title="" trigger="hover">
+              <img :src="scope.row.img" alt="" style="width: 300px;">
+              <img slot="reference" :src="scope.row.img" style="height: 30px;">
+            </el-popover>
+          </template>
+        </el-table-column>
+        <el-table-column label="封面" prop="img" style="width: 50px">
+          <template slot-scope="scope">
+            <el-button type="primary" round @click="get_test_video(scope.row.No)" style="height: 30px">观看</el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+      <!-- 分页器 -->
+      <div class="block" style="margin-top:15px;">
+        <el-pagination :current-page="currentPage" :page-size="pageSize" :page-sizes="[1,5,10,20]"
+                       :total="tableData.length"
+                       @current-change="handleCurrentChange"
+                       @size-change="handleSizeChange"
+                       align='center'
+                       layout="total, sizes, prev, pager, next, jumper">
+        </el-pagination>
+      </div>
     </div>
+
   </div>
 </template>
 
@@ -99,8 +102,6 @@ export default {
 <style scoped>
 .test_video{
   position: absolute;
-  left: 20%;
-  top: 120px;
   width: 60%;
 }
 
@@ -116,7 +117,6 @@ export default {
 }
 
 .image {
-  width: 150px;
   display: block;
 }
 
@@ -129,4 +129,11 @@ export default {
 .clearfix:after {
   clear: both
 }
+
+.video_table{
+  position: absolute;
+  left: 80%;
+  top: 0;
+}
+
 </style>

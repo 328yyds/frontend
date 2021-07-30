@@ -155,12 +155,12 @@ export default {
         inputPattern: /^[\u4e00-\u9fa5]{1,5}$/,
         inputErrorMessage: '姓名格式不正确'
       }).then(({value}) => {
-        this.store.top_user_name = value;
+        this.store.top_name = value;
 
         axios_instance.post("/set_user_name", {
           usertype: this.store.top_usertype,
           username: this.store.top_username,
-          name: this.store.top_user_name
+          name: this.store.top_name
         }).then((response) => {
           if (response.data[0] === true) {
             this.success_box("姓名设置成功！");

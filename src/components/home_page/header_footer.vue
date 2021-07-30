@@ -32,9 +32,11 @@
           </el-col>
         </el-row>
       </el-header>
+
       <el-main class="el-main">
         <router-view name="home_page_body"></router-view>
       </el-main>
+
       <el-footer>
         <div class="el_footer_text">Copyright© 2021 328小分队 All Rights Reserved</div>
       </el-footer>
@@ -86,6 +88,8 @@ export default {
 .el-main {
   color: #333;
   text-align: center;
+  padding: 0;
+  margin: 0;
   height: 1458px;
   width: 100%;
 }

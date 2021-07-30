@@ -11,9 +11,10 @@ import '@/assets/global/global.css'
 import echarts from 'echarts'
 // 挂载到vue原型
 Vue.prototype.$echarts = echarts;
-
+import VueTypedJs from 'vue-typed-js'
 
 Vue.use(ElementUI);
+Vue.use(VueTypedJs);
 Vue.config.productionTip = false
 Vue.prototype.store = store;
 

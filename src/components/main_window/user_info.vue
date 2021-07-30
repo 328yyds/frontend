@@ -107,17 +107,17 @@ export default {
       console.log(key, keyPath);
     },
     onchangeImgFun (e) {
-      var file = e.target.files[0]
+      let file = e.target.files[0]
       console.log(file)
       // 获取图片的大小，做大小限制有用
       let imgSize = file.size
-      var _this = this // this指向问题，所以在外面先定义
+      let _this = this // this指向问题，所以在外面先定义
       // 比如上传头像限制5M大小，这里获取的大小单位是b
       if (imgSize <= 0.5 * 1024 * 1024) {
         // 合格
         _this.errorStr = ''
         // base64方法 2
-        var reader = new FileReader()
+        let reader = new FileReader()
         reader.readAsDataURL(file) // 读出 base64
         reader.onloadend = function () {
           // 图片的 base64 格式, 可以直接当成 img 的 src 属性值
